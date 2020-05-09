@@ -8,7 +8,7 @@
 #define MAX_VOTERS 100
 #define MAX_CANDIDATES 9
 
-// preferences[i][j] is jth preference for voter i (index of candidate is stored)
+// preferences[i][j] is jth rank preference for voter i (index of candidate is stored)
 int preferences[MAX_VOTERS][MAX_CANDIDATES];
 
 // Candidates have name, vote count, eliminated status
@@ -142,7 +142,7 @@ bool vote(int voter, int rank, string name)
         if (strcmp(name, candidates[i].name) == 0)
         {
             // candidate found --> record preference
-            preferences[voter][i] = rank;
+            preferences[voter][rank] = i;
             return true;
         }
     }
@@ -191,21 +191,14 @@ void update_votes(int voter)
     for (int rank = 0; rank < candidate_count; rank++)
     {
         // find candidate with current rank
-        for (int c = 0; c < candidate_count; c++)
+        int c = preferences[voter][rank];
+        // Check if candidate is eliminated.
+        // If not eliminated then increase vote and return.
+        // If eliminated then break and check for next rank.
+        if (candidates[c].eliminated == false)
         {
-            if (preferences[voter][c] == rank)
-            {
-                // If found, check if candidate is eliminated.
-                // If not eliminated then increase vote and return.
-                // If eliminated then break and check for next rank.
-                if (candidates[c].eliminated == false)
-                {
-                    candidates[c].votes++;
-                    return;
-                }
-                break;
-            }
-
+            candidates[c].votes++;
+            return;
         }
     }
 }
