@@ -161,25 +161,6 @@ void tabulate(void)
         update_votes(voter);
     }
 
-
-    // // TEST
-    // for (int i = 0; i < voter_count; i++)
-    // {
-    //     for (int j = 0; j < candidate_count; j++)
-    //     {
-    //         printf("%i ", preferences[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
-    for (int i = 0; i < candidate_count; i++)
-    {
-        printf("%s: %i\n", candidates[i].name, candidates[i].votes);
-    }
-    printf("\n");
-
-
-
     return;
 }
 
